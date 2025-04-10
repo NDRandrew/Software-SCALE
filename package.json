@@ -1,0 +1,27 @@
+{
+  "name": "emergy-application",
+  "version": "1.0.0",
+  "description": "Aplicação Flask para cálculos e visualização de emergy",
+  "main": "index.js",
+  "scripts": {
+    "start": "python app.py",
+    "test": "python run_tests.py",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:e2e": "start-server-and-test start http://localhost:5000 cypress:run"
+  },
+  "keywords": [
+    "emergy",
+    "flask",
+    "ddd",
+    "tdd",
+    "solid"
+  ],
+  "author": "André Carbonieri Silva T839FC9",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^13.6.0",
+    "cypress-file-upload": "^5.0.8",
+    "start-server-and-test": "^2.0.0"
+  }
+}

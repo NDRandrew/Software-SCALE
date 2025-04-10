@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Main - Emergy Application{% endblock %}
+
+{% block header %}Main Page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="welcome-section">
+        <h2>Welcome to the Emergy Application</h2>
+        <p>This application provides tools for emergy calculation and visualization.</p>
+    </section>
+    
+    <section class="features-section">
+        <div class="feature-card">
+            <h3>Emergy Calculator</h3>
+            <p>Upload CSV files to calculate emergy values.</p>
+            <a href="{{ url_for('emergy.emergy_calculator') }}" class="btn">Go to Calculator</a>
+        </div>
+        
+        <div class="feature-card">
+            <h3>Graphics</h3>
+            <p>Visualize your emergy data with interactive graphics.</p>
+            <a href="{{ url_for('emergy.graphics') }}" class="btn">View Graphics</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

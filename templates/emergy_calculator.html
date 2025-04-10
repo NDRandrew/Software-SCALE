@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Emergy Calculator - Emergy Application{% endblock %}
+
+{% block header %}Emergy Calculator{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="calculator-section">
+        <h2>Upload CSV File for Emergy Calculation</h2>
+        <p>Upload your CSV file containing the data for emergy calculation.</p>
+        
+        <form action="{{ url_for('emergy.emergy_calculator') }}" method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="form-group">
+                <label for="csv_file">Select CSV File:</label>
+                <input type="file" id="csv_file" name="csv_file" accept=".csv" required>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Calculate Emergy</button>
+            </div>
+        </form>
+    </section>
+    
+    <section class="results-section">
+        <h2>Results</h2>
+        <div class="results-container">
+            <p>Upload a CSV file to see the calculation results.</p>
+            <!-- Results will be displayed here -->
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/emergy_calculator.js') }}"></script>
+{% endblock %}
