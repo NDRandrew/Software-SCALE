@@ -193,4 +193,4 @@ Os testes Cypress estão organizados da seguinte forma:
 - Expandir a cobertura de testes automatizados
 
 
-Feito por André Carbonieri Silva T839FC9, Juan, Kãua, Pedro Maffra, Hugo
+Feito por ndrAndré Carbonieri Silva T839FC9, JOAn, KEVEN, Pedro MAIffra, HugoN
