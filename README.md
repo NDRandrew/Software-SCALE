@@ -39,10 +39,48 @@ O projeto segue uma abordagem de arquitetura limpa com as seguintes camadas:
 ## Funcionalidades
 
 - **Página Principal**: Visão geral da aplicação e suas funcionalidades.
+<<<<<<< HEAD
+- **Calculadora Emergy**: Upload de arquivos TXT para cálculos de emergy.
+- **Gráficos**: Visualização dos resultados dos cálculos de emergy.
+- **Menu Hamburger**: Navegação entre páginas.
+
+### Processamento de Dados de Consumo de Energia
+
+A aplicação agora suporta o processamento de dados de consumo de energia a partir de arquivos TXT. Esta funcionalidade permite:
+
+- **Upload de Arquivos TXT**: Carregue arquivos TXT contendo dados de consumo de energia no formato específico.
+- **Processamento de Dados**: Análise automática dos dados para extrair informações relevantes sobre consumo de energia.
+- **Visualização Gráfica**: Visualize os dados processados em diferentes tipos de gráficos:
+  - Gráficos de linha para mostrar tendências de consumo ao longo do tempo
+  - Gráficos de barras para comparar diferentes medições
+  - Gráficos de pizza para visualizar a distribuição do consumo
+
+#### Formato dos Dados
+
+O arquivo TXT deve seguir o seguinte formato (valores separados por ponto e vírgula):
+
+```
+Date;Time;Global_active_power;Global_reactive_power;Voltage;Global_intensity;Sub_metering_1;Sub_metering_2;Sub_metering_3
+16/12/2006;17:24:00;4.216;0.418;234.840;18.400;0.000;1.000;17.000
+```
+
+Onde:
+- **Date**: Data da medição (DD/MM/AAAA)
+- **Time**: Hora da medição (HH:MM:SS)
+- **Global_active_power**: Potência ativa global (kilowatts)
+- **Global_reactive_power**: Potência reativa global (kilowatts)
+- **Voltage**: Tensão (volts)
+- **Global_intensity**: Intensidade global (amperes)
+- **Sub_metering_1**: Energia ativa sub-medição 1 (watt-hora) - Cozinha
+- **Sub_metering_2**: Energia ativa sub-medição 2 (watt-hora) - Lavanderia
+- **Sub_metering_3**: Energia ativa sub-medição 3 (watt-hora) - Aquecedor de água e ar-condicionado
+
+=======
 - **Calculadora Emergy**: Upload de arquivos CSV para cálculos de emergy.
 - **Gráficos**: Visualização dos resultados dos cálculos de emergy.
 - **Menu Hamburger**: Navegação entre páginas.
 
+>>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
 ## Princípios de Design
 
 ### Design Orientado ao Domínio (DDD)
@@ -191,6 +229,11 @@ Os testes Cypress estão organizados da seguinte forma:
 - Melhorar as capacidades de visualização
 - Adicionar funcionalidade de exportação para resultados de cálculos
 - Expandir a cobertura de testes automatizados
+<<<<<<< HEAD
+- Implementar análise preditiva para dados de consumo de energia
+- Adicionar mais tipos de visualizações para análise de dados
+=======
+>>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
 
 
 Feito por ndrAndré Carbonieri Silva T839FC9, JOAn, KEVEN, Pedro MAIffra, HugoN

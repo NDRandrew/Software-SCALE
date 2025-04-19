@@ -222,6 +222,60 @@ h2 {
     border: 1px solid #ddd;
 }
 
+<<<<<<< HEAD
+/* Data Table Styles */
+.file-data {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.file-data h4 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.data-table th, 
+.data-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.data-table th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.data-table tr:hover {
+    background-color: #e9e9e9;
+}
+
+.more-data {
+    font-style: italic;
+    color: #7f8c8d;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.data-preview {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+=======
+>>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
 /* Graphics Section */
 .graphics-container {
     min-height: 400px;
