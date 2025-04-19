@@ -2,11 +2,7 @@
 Controlador para rotas relacionadas a Emergy.
 Este arquivo implementa o controlador para as rotas relacionadas aos cálculos de Emergy,
 seguindo o padrão MVC. O controlador é responsável por lidar com as requisições HTTP
-<<<<<<< HEAD
 relacionadas aos cálculos de Emergy, incluindo o upload de arquivos TXT, visualização
-=======
-relacionadas aos cálculos de Emergy, incluindo o upload de arquivos CSV, visualização
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
 de gráficos e acesso à API para obter e excluir cálculos.
 
 Feito por André Carbonieri Silva T839FC9
@@ -64,26 +60,17 @@ class EmergyController:
         """
         if request.method == 'POST':
             # Verifica se um arquivo foi enviado
-<<<<<<< HEAD
             if 'txt_file' not in request.files:
                 flash('Nenhuma parte do arquivo')
                 return redirect(request.url)
             
             file = request.files['txt_file']
-=======
-            if 'csv_file' not in request.files:
-                flash('Nenhuma parte do arquivo')
-                return redirect(request.url)
-            
-            file = request.files['csv_file']
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
             
             # Verifica se o arquivo está vazio
             if file.filename == '':
                 flash('Nenhum arquivo selecionado')
                 return redirect(request.url)
             
-<<<<<<< HEAD
             # Verifica se o arquivo é um TXT
             if not file.filename.endswith('.txt'):
                 flash('Por favor, envie um arquivo TXT')
@@ -93,48 +80,25 @@ class EmergyController:
             txt_data = file.read().decode('utf-8')
             
             # Processa os dados TXT
-=======
-            # Verifica se o arquivo é um CSV
-            if not file.filename.endswith('.csv'):
-                flash('Por favor, envie um arquivo CSV')
-                return redirect(request.url)
-            
-            # Lê o conteúdo do arquivo
-            csv_data = file.read().decode('utf-8')
-            
-            # Processa os dados CSV
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
             metadata: Dict[str, Any] = {
                 'filename': file.filename,
                 'user_agent': request.user_agent.string
             }
             
             try:
-<<<<<<< HEAD
                 calculation = self._app_service.process_txt_data(txt_data, metadata)
-=======
-                calculation = self._app_service.process_csv_data(csv_data, metadata)
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
                 # Armazena o ID do cálculo na sessão para uso posterior
                 # Em um aplicativo real, isso seria tratado por um gerenciador de sessão
                 # Por enquanto, vamos apenas retornar uma mensagem de sucesso
                 return jsonify({
                     'success': True,
                     'calculation_id': calculation.id,
-<<<<<<< HEAD
                     'message': 'Arquivo TXT processado com sucesso'
-=======
-                    'message': 'Arquivo CSV processado com sucesso'
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
                 })
             except Exception as e:
                 return jsonify({
                     'success': False,
-<<<<<<< HEAD
                     'message': f'Erro ao processar arquivo TXT: {str(e)}'
-=======
-                    'message': f'Erro ao processar arquivo CSV: {str(e)}'
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
                 })
         
         # Requisição GET - renderiza o template

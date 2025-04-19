@@ -7,7 +7,6 @@
 {% block content %}
 <div class="container">
     <section class="calculator-section">
-<<<<<<< HEAD
         <h2>Upload TXT File for Emergy Calculation</h2>
         <p>Upload your TXT file containing the data for emergy calculation.</p>
         
@@ -15,15 +14,6 @@
             <div class="form-group">
                 <label for="txt_file">Select TXT File:</label>
                 <input type="file" id="txt_file" name="txt_file" accept=".txt" required>
-=======
-        <h2>Upload CSV File for Emergy Calculation</h2>
-        <p>Upload your CSV file containing the data for emergy calculation.</p>
-        
-        <form action="{{ url_for('emergy.emergy_calculator') }}" method="post" enctype="multipart/form-data" class="upload-form">
-            <div class="form-group">
-                <label for="csv_file">Select CSV File:</label>
-                <input type="file" id="csv_file" name="csv_file" accept=".csv" required>
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
             </div>
             
             <div class="form-group">
@@ -35,11 +25,7 @@
     <section class="results-section">
         <h2>Results</h2>
         <div class="results-container">
-<<<<<<< HEAD
             <p>Upload a TXT file to see the calculation results.</p>
-=======
-            <p>Upload a CSV file to see the calculation results.</p>
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
             <!-- Results will be displayed here -->
         </div>
     </section>

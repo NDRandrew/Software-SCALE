@@ -4,11 +4,7 @@ Este arquivo implementa o serviço de aplicação para cálculos de Emergy,
 que atua como uma fachada para a camada de aplicação, coordenando o uso
 de serviços de domínio e fornecendo uma interface simplificada para a
 camada de apresentação. Este serviço é responsável por processar dados
-<<<<<<< HEAD
 TXT e convertê-los em cálculos de Emergy.
-=======
-CSV e convertê-los em cálculos de Emergy.
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
 
 Feito por André Carbonieri Silva T839FC9
 """
@@ -53,7 +49,6 @@ class EmergyApplicationService:
         # Cria cálculo usando serviço de domínio
         return self._emergy_service.create_calculation(inputs, metadata)
     
-<<<<<<< HEAD
     def process_txt_data(self, txt_data: str, metadata: Dict[str, Any]) -> EmergyCalculation:
         """
         Processa dados TXT para criar um cálculo de emergy.
@@ -71,8 +66,6 @@ class EmergyApplicationService:
         # Cria cálculo usando serviço de domínio
         return self._emergy_service.create_calculation(inputs, metadata)
     
-=======
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
     def get_calculation(self, calculation_id: str) -> Optional[EmergyCalculation]:
         """
         Recupera um cálculo pelo seu ID.
@@ -136,7 +129,6 @@ class EmergyApplicationService:
                 'description': 'Entrada de amostra 2'
             }
         ]
-<<<<<<< HEAD
     
     def _parse_txt(self, txt_data: str) -> List[Dict[str, Any]]:
         """
@@ -237,5 +229,3 @@ class EmergyApplicationService:
                 continue
         
         return inputs
-=======
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f

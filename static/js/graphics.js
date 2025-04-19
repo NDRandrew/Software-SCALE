@@ -2,10 +2,7 @@
  * Arquivo JavaScript para a funcionalidade de visualização de Gráficos.
  * Este arquivo contém a lógica para a visualização de gráficos dos resultados
  * de cálculos de Emergy, incluindo a criação e atualização de gráficos usando Chart.js.
-<<<<<<< HEAD
  * Atualizado para visualizar dados de consumo de energia de arquivos TXT.
-=======
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
  * 
  * Feito por André Carbonieri Silva T839FC9
  */
@@ -57,13 +54,8 @@ function initializeGraphicsVisualization() {
  */
 function checkForEmergyData() {
     // Em uma aplicação real, isso verificaria o armazenamento da sessão, banco de dados ou API
-<<<<<<< HEAD
     // Para demonstração, vamos retornar true para mostrar os gráficos
     return true;
-=======
-    // Para este placeholder, vamos apenas retornar false
-    return false;
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
 }
 
 /**
@@ -79,7 +71,6 @@ function createPlaceholderChart(container) {
     canvas.id = 'emergy-chart';
     container.appendChild(canvas);
     
-<<<<<<< HEAD
     // Cria um gráfico de consumo de energia usando Chart.js
     const ctx = canvas.getContext('2d');
     new Chart(ctx, {
@@ -130,39 +121,6 @@ function createPlaceholderChart(container) {
                         display: true,
                         text: 'Horário'
                     }
-=======
-    // Cria um gráfico de placeholder usando Chart.js
-    const ctx = canvas.getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4', 'Categoria 5'],
-            datasets: [{
-                label: 'Valores de Emergy',
-                data: [12, 19, 3, 5, 2],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
                 }
             }
         }
@@ -175,12 +133,6 @@ function createPlaceholderChart(container) {
  * @param {string} chartType - O tipo de gráfico a ser exibido
  */
 function updateChart(container, chartType) {
-<<<<<<< HEAD
-=======
-    // Em uma aplicação real, isso buscaria os dados e atualizaria o gráfico
-    // Para este placeholder, vamos apenas recriar o gráfico com o novo tipo
-    
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
     // Limpa o contêiner
     container.innerHTML = '';
     
@@ -189,7 +141,6 @@ function updateChart(container, chartType) {
     canvas.id = 'emergy-chart';
     container.appendChild(canvas);
     
-<<<<<<< HEAD
     // Cria um gráfico usando Chart.js
     const ctx = canvas.getContext('2d');
     
@@ -338,51 +289,11 @@ function updateChart(container, chartType) {
             }
         };
     }
-=======
-    // Cria um gráfico de placeholder usando Chart.js
-    const ctx = canvas.getContext('2d');
-    
-    // Dados de exemplo
-    const data = {
-        labels: ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4', 'Categoria 5'],
-        datasets: [{
-            label: 'Valores de Emergy',
-            data: [12, 19, 3, 5, 2],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
-            borderWidth: 1
-        }]
-    };
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
     
     // Cria gráfico com base no tipo selecionado
     new Chart(ctx, {
         type: chartType,
-<<<<<<< HEAD
         data: chartData,
         options: chartOptions
-=======
-        data: data,
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
     });
 }

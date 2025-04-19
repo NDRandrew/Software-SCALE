@@ -39,7 +39,6 @@ O projeto segue uma abordagem de arquitetura limpa com as seguintes camadas:
 ## Funcionalidades
 
 - **Página Principal**: Visão geral da aplicação e suas funcionalidades.
-<<<<<<< HEAD
 - **Calculadora Emergy**: Upload de arquivos TXT para cálculos de emergy.
 - **Gráficos**: Visualização dos resultados dos cálculos de emergy.
 - **Menu Hamburger**: Navegação entre páginas.
@@ -75,12 +74,6 @@ Onde:
 - **Sub_metering_2**: Energia ativa sub-medição 2 (watt-hora) - Lavanderia
 - **Sub_metering_3**: Energia ativa sub-medição 3 (watt-hora) - Aquecedor de água e ar-condicionado
 
-=======
-- **Calculadora Emergy**: Upload de arquivos CSV para cálculos de emergy.
-- **Gráficos**: Visualização dos resultados dos cálculos de emergy.
-- **Menu Hamburger**: Navegação entre páginas.
-
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
 ## Princípios de Design
 
 ### Design Orientado ao Domínio (DDD)
@@ -229,11 +222,8 @@ Os testes Cypress estão organizados da seguinte forma:
 - Melhorar as capacidades de visualização
 - Adicionar funcionalidade de exportação para resultados de cálculos
 - Expandir a cobertura de testes automatizados
-<<<<<<< HEAD
 - Implementar análise preditiva para dados de consumo de energia
 - Adicionar mais tipos de visualizações para análise de dados
-=======
->>>>>>> ecb21e436744d3bcbf9248c9b6e2c7680d3bd20f
 
 
-Feito por ndrAndré Carbonieri Silva T839FC9, JOAn, KEVEN, Pedro MAIffra, HugoN
+Feito por André Carbonieri Silva T839FC9
