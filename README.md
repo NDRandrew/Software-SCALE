@@ -41,7 +41,7 @@ O projeto segue uma abordagem de arquitetura limpa com as seguintes camadas:
 - **Página Principal**: Visão geral da aplicação e suas funcionalidades.
 - **Calculadora Emergy**: Upload de arquivos TXT para cálculos de emergy.
 - **Gráficos**: Visualização dos resultados dos cálculos de emergy.
-- **Menu Hamburger**: Navegação entre páginas.
+- **Menu Hamburger**: Navegação entre páginas com funcionalidade de abrir/fechar ao clicar no ícone, no botão X ou fora do menu.
 
 ### Processamento de Dados de Consumo de Energia
 
@@ -227,3 +227,4 @@ Os testes Cypress estão organizados da seguinte forma:
 
 
 Feito por André Carbonieri Silva T839FC9
+Melhorias no Menu Hamburger por Kauã

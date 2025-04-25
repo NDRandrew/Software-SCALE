@@ -104,6 +104,20 @@ header h1 {
     background-color: #34495e;
 }
 
+.menu__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.25s;
+}
+
+.menu__close:hover {
+    color: #e74c3c;
+}
+
 #menu__toggle:checked ~ .menu__btn > span {
     transform: rotate(45deg);
 }
