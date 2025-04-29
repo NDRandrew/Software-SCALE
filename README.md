@@ -226,5 +226,30 @@ Os testes Cypress estão organizados da seguinte forma:
 - Adicionar mais tipos de visualizações para análise de dados
 
 
-Feito por André Carbonieri Silva T839FC9
+Base feita por André Carbonieri Silva T839FC9
 Melhorias no Menu Hamburger por Kauã
+Lógica da Calculadora e dos gráficos feita por André Carbonieri Silva T839FC9
+
+## Melhorias Recentes
+
+### Integração entre Calculadora Emergy e Visualização de Gráficos
+
+- **Upload e Redirecionamento Automático**: Agora ao fazer upload de um arquivo na página "Emergy Calculator", o usuário é automaticamente redirecionado para a página "Gráficos" onde os dados são visualizados.
+- **Remoção da Seção de Resultados**: A seção de resultados na página da calculadora foi removida, simplificando a interface.
+- **Processamento de Dados via SessionStorage**: Os dados do arquivo são transferidos entre páginas usando sessionStorage, permitindo uma experiência mais fluida.
+
+### Melhorias na Visualização de Gráficos
+
+- **Layout Vertical Otimizado**: Os gráficos de séries temporais agora são exibidos um abaixo do outro, ocupando toda a largura da área de visualização.
+- **Tamanho Aumentado dos Gráficos**: Cada gráfico agora tem 500px de altura para melhor visualização de grandes conjuntos de dados.
+- **Configuração Padrão do Gráfico de Dispersão**: O eixo X é definido como Global_intensity e o eixo Y como Global_active_power.
+- **Seleção de Intervalo de Tempo**: Adicionados controles para selecionar o intervalo de tempo a ser visualizado nos gráficos de séries temporais.
+- **Resumo de Dados em Seção Separada**: O resumo dos dados agora é exibido em uma seção dedicada abaixo dos gráficos.
+- **Tradução para Português**: Todos os comentários no código e elementos da interface foram traduzidos para português brasileiro.
+
+### Arquivos Modificados
+
+- `templates/emergy_calculator.html`: Atualizado para remover a seção de resultados e modificar o formulário de upload.
+- `static/js/emergy_calculator.js`: Modificado para processar o arquivo e redirecionar para a página de gráficos.
+- `static/js/graphics.js`: Atualizado para carregar dados do sessionStorage e melhorar a visualização dos gráficos.
+- `templates/graphics.html`: Modificado para melhorar o layout e a organização dos elementos.

@@ -1,43 +1,135 @@
 {% extends "base.html" %}
 
-{% block title %}Graphics - Emergy Application{% endblock %}
+{% block title %}Gráficos - Aplicação Emergy{% endblock %}
 
-{% block header %}Graphics Visualization{% endblock %}
+{% block header %}Visualização de Gráficos{% endblock %}
 
 {% block content %}
 <div class="container">
-    <section class="graphics-section">
-        <h2>Emergy Data Visualization</h2>
-        <p>View graphical representations of your emergy calculation results.</p>
-        
-        <div class="graphics-container">
-            <div class="chart-placeholder">
-                <p>No data available for visualization. Please use the Emergy Calculator to generate data first.</p>
-            </div>
-        </div>
-    </section>
-    
+    <!-- Seção de controles no topo para melhor usabilidade -->
     <section class="controls-section">
-        <h2>Visualization Controls</h2>
+        <h2>Controles de Visualização</h2>
         <div class="controls-container">
             <div class="form-group">
-                <label for="chart-type">Chart Type:</label>
+                <label for="chart-type">Tipo de Gráfico:</label>
                 <select id="chart-type" name="chart-type" disabled>
-                    <option value="bar">Bar Chart</option>
-                    <option value="line">Line Chart</option>
-                    <option value="pie">Pie Chart</option>
+                    <option value="timeseries">Gráfico de Linha (Série Temporal)</option>
+                    <option value="scatter">Gráfico de Dispersão</option>
+                    <option value="heatmap">Mapa de Calor de Correlação</option>
                 </select>
             </div>
             
             <div class="form-group">
-                <button id="update-chart" class="btn btn-primary" disabled>Update Chart</button>
+                <label for="data-file">Carregar Arquivo de Dados:</label>
+                <input type="file" id="data-file" name="data-file" accept=".txt" disabled>
+                <small>Formatos aceitos: .txt</small>
+            </div>
+            
+            <!-- Controles de intervalo de tempo para gráficos de série temporal -->
+            <div id="time-range-controls" style="display: none; margin-top: 15px; padding: 15px; background-color: #e8f4f8; border-radius: 8px;">
+                <h3 style="margin-top: 0; font-size: 16px; color: #2c3e50; margin-bottom: 15px;">Intervalo de Tempo</h3>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div class="form-group" style="flex: 1; min-width: 150px;">
+                        <label for="start-time">Hora Inicial:</label>
+                        <select id="start-time" name="start-time" disabled>
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1; min-width: 150px;">
+                        <label for="end-time">Hora Final:</label>
+                        <select id="end-time" name="end-time" disabled>
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="align-self: flex-end;">
+                        <button id="update-time-range" class="btn btn-primary" disabled>Atualizar Intervalo</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 15px;">
+                <button id="update-chart" class="btn btn-primary" disabled>Atualizar Gráfico</button>
             </div>
         </div>
     </section>
+    
+    <!-- Seção de gráficos com estilo melhorado -->
+    <section class="graphics-section">
+        <h2>Visualização de Dados Emergy</h2>
+        <p>Visualize representações gráficas dos seus dados de energia.</p>
+        
+        <!-- Container de gráficos com altura adequada para gráficos grandes -->
+        <div class="graphics-container" style="min-height: 1200px; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <div class="chart-placeholder" style="text-align: center; padding: 100px 0;">
+                <p>Nenhum dado disponível para visualização. Por favor, carregue um arquivo de dados.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Nova seção para o resumo de dados -->
+    <section class="data-summary-section" style="margin-top: 30px; display: none;">
+        <h2>Resumo dos Dados</h2>
+        <div id="data-summary-container" style="background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <!-- O conteúdo será preenchido dinamicamente pelo JavaScript -->
+        </div>
+    </section>
 </div>
+
+<style>
+    /* Estilos adicionais para melhorar a visualização */
+    .controls-container {
+        background-color: #f0f4f8;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    .btn-primary {
+        background-color: #2c3e50;
+        border-color: #2c3e50;
+    }
+    
+    .btn-primary:hover {
+        background-color: #34495e;
+        border-color: #34495e;
+    }
+    
+    /* Estilos para garantir que os gráficos fiquem um abaixo do outro */
+    .graphics-container > div {
+        margin-bottom: 40px;
+    }
+    
+    h2 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+    
+    /* Estilos para os controles de tempo */
+    .time-controls {
+        background-color: #e8f4f8;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+</style>
 {% endblock %}
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.1"></script>
 <script src="{{ url_for('static', filename='js/graphics.js') }}"></script>
 {% endblock %}
