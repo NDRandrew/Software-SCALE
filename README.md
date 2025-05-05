@@ -243,6 +243,7 @@ Os testes Cypress estão organizados da seguinte forma:
 - **Seleção de Intervalo de Tempo**: Adicionados controles para selecionar o intervalo de tempo a ser visualizado nos gráficos de séries temporais.
 - **Resumo de Dados em Seção Separada**: O resumo dos dados agora é exibido em uma seção dedicada abaixo dos gráficos.
 - **Tradução para Português**: Todos os comentários no código e elementos da interface foram traduzidos para português brasileiro.
+- **Upload de novos tipos de arquivo**: Permitir que o usuario faça upload de arquivos .csv e .xls
 
 ### Arquivos Modificados
 
