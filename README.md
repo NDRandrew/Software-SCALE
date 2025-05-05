@@ -283,7 +283,7 @@ Os testes Cypress estão organizados da seguinte forma:
 - `static/js/graphics.js`: Modificado para implementar a funcionalidade do controle deslizante.
 
 ### Developers
-- `Base`: André Carbonieri Silva
+- `Base`: [André Carbonieri Silva] (https://github.com/NDRandrew) 
 - `Menu Hamburger`: Kauã
 - `Lógica da Calculadora e dos gráficos`: André Carbonieri Silva
 - `UI/UX`: Kauã e Juan
