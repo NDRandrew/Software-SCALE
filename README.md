@@ -282,8 +282,8 @@ Os testes Cypress estão organizados da seguinte forma:
 - `templates/graphics.html`: Atualizado com o novo controle deslizante de intervalo de tempo.
 - `static/js/graphics.js`: Modificado para implementar a funcionalidade do controle deslizante.
 
-
-Base feita por André Carbonieri Silva T839FC9
-Melhorias no Menu Hamburger por Kauã
-Lógica da Calculadora e dos gráficos feita por André Carbonieri Silva T839FC9
-UI/UX feito por Kauã e Juan
+### Developers
+- `Base`: André Carbonieri Silva
+- `Menu Hamburger`: Kauã
+- `Lógica da Calculadora e dos gráficos`: André Carbonieri Silva
+- `UI/UX`: Kauã e Juan
