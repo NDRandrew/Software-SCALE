@@ -285,6 +285,6 @@ Os testes Cypress estão organizados da seguinte forma:
 
 ### Developers
 - `Base`: [André Carbonieri Silva] (https://github.com/NDRandrew) 
-- `Menu Hamburger`: [Kauã] (https://github.com/KauaDeSouzaPereira)
+- `Menu Hamburger`: [Kauã de Souza Pereira] (https://github.com/KauaDeSouzaPereira)
 - `Lógica da Calculadora e dos gráficos`: [André Carbonieri Silva] (https://github.com/NDRandrew)
-- `UI/UX`: [Kauã] (https://github.com/KauaDeSouzaPereira) e [Juan] (https://github.com/Jplay-code)
+- `UI/UX`: [Kauã de Souza Pereira] (https://github.com/KauaDeSouzaPereira) e [Juan Santos de Oliveira] (https://github.com/Jplay-code)
