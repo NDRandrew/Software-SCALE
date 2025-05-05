@@ -226,9 +226,6 @@ Os testes Cypress estão organizados da seguinte forma:
 - Adicionar mais tipos de visualizações para análise de dados
 
 
-Base feita por André Carbonieri Silva T839FC9
-Melhorias no Menu Hamburger por Kauã
-Lógica da Calculadora e dos gráficos feita por André Carbonieri Silva T839FC9
 
 ## Melhorias Recentes
 
@@ -253,3 +250,40 @@ Lógica da Calculadora e dos gráficos feita por André Carbonieri Silva T839FC9
 - `static/js/emergy_calculator.js`: Modificado para processar o arquivo e redirecionar para a página de gráficos.
 - `static/js/graphics.js`: Atualizado para carregar dados do sessionStorage e melhorar a visualização dos gráficos.
 - `templates/graphics.html`: Modificado para melhorar o layout e a organização dos elementos.
+
+## Atualizações de UI/UX - Maio 2025
+
+### Fonte Personalizada
+
+- **Implementação da Fonte TT Firs Neue**: Adicionamos a fonte TT Firs Neue em todo o site para uma aparência mais moderna e profissional.
+- **Múltiplos Estilos de Fonte**: Incluímos diferentes pesos e estilos da fonte (regular, bold, italic, light, medium) para uma hierarquia visual adequada.
+
+### Tradução para Português Brasileiro
+
+- **Interface Completamente em Português**: Todos os textos da interface foram traduzidos para português brasileiro, incluindo botões, mensagens e instruções.
+- **Consistência Linguística**: Mantivemos uma terminologia consistente em toda a aplicação para melhorar a experiência do usuário.
+
+### Controle de Intervalo de Tempo Aprimorado
+
+- **Controle Deslizante Interativo**: Substituímos os seletores de dropdown por um controle deslizante interativo para seleção de intervalo de tempo.
+- **Ajuste Visual de Intervalo**: Os usuários agora podem ajustar visualmente o intervalo de tempo arrastando os controles deslizantes mínimo e máximo.
+- **Feedback Visual Imediato**: O intervalo selecionado é destacado visualmente no controle deslizante para melhor feedback ao usuário.
+
+### Rodapé Consistente
+
+- **Rodapé em Todas as Páginas**: Adicionamos um rodapé consistente em todas as páginas com o slogan da empresa e informações de contato.
+- **Identidade Visual Reforçada**: O rodapé ajuda a manter uma identidade visual consistente em toda a aplicação.
+
+### Arquivos Modificados
+
+- `static/css/style.css`: Atualizado para incluir as declarações de fonte e estilos globais.
+- `templates/base.html`: Modificado para incluir o rodapé em todas as páginas.
+- `templates/emergy_calculator.html`: Traduzido para português brasileiro.
+- `templates/graphics.html`: Atualizado com o novo controle deslizante de intervalo de tempo.
+- `static/js/graphics.js`: Modificado para implementar a funcionalidade do controle deslizante.
+
+
+Base feita por André Carbonieri Silva T839FC9
+Melhorias no Menu Hamburger por Kauã
+Lógica da Calculadora e dos gráficos feita por André Carbonieri Silva T839FC9
+UI/UX feito por Kauã e Juan

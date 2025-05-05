@@ -1,32 +1,50 @@
 {% extends "base.html" %}
 
-{% block title %}Emergy Calculator - Emergy Application{% endblock %}
+{% block title %}Calculadora de Emergia - Aplicação Emergia{% endblock %}
 
-{% block header %}Emergy Calculator{% endblock %}
+{% block header %}Calculadora de Emergia{% endblock %}
 
 {% block content %}
 <div class="container">
     <section class="calculator-section">
-        <h2>Upload TXT File for Energy Data Visualization</h2>
-        <p>Upload your TXT file containing energy data to visualize in graphs.</p>
+        <h2>Upload de Arquivo TXT para Visualização de Dados de Energia</h2>
+        <p>Faça upload do seu arquivo TXT contendo dados de energia para visualizar em gráficos.</p>
+        
+        <div class="sample-data-section" style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px; border-left: 4px solid #4a7c3a;">
+            <h4 style="margin-top: 0; color: #4a7c3a;">Precisa de dados de exemplo?</h4>
+            <p>Você pode baixar um arquivo de dados de exemplo para testar a visualização:</p>
+            <a href="{{ url_for('static', filename='sample_energy_data.txt') }}" download class="btn btn-sm btn-success">
+                <i class="fas fa-download"></i> Download Sample Data
+            </a>
+        </div>
         
         <form id="energy-data-form" class="upload-form">
             <div class="form-group">
-                <label for="txt_file">Select TXT File:</label>
+                <label for="txt_file">Selecione o Arquivo TXT:</label>
                 <input type="file" id="txt_file" name="txt_file" accept=".txt" required>
-                <small class="form-text text-muted">File should contain: Date, Time, Global_active_power, Global_reactive_power, Voltage, Global_intensity, Sub_metering_1, Sub_metering_2, Sub_metering_3</small>
+                <small class="form-text text-muted">O arquivo deve conter: Date, Time, Global_active_power, Global_reactive_power, Voltage, Global_intensity, Sub_metering_1, Sub_metering_2, Sub_metering_3</small>
             </div>
             
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Visualize Data</button>
+                <button type="submit" class="btn btn-primary">Visualizar Dados</button>
             </div>
         </form>
         
         <div id="upload-status" class="mt-3" style="display: none;">
             <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">Carregando...</span>
             </div>
-            <span class="ml-2">Processing your file...</span>
+            <span class="ml-2">Processando seu arquivo...</span>
+        </div>
+        
+        <div class="instructions-section" style="margin-top: 30px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
+            <h4 style="margin-top: 0; color: #4a7c3a;">Como funciona:</h4>
+            <ol style="padding-left: 20px;">
+                <li>Faça upload de um arquivo TXT com dados de energia (separados por ponto e vírgula ou espaço)</li>
+                <li>Clique em "Visualizar Dados" para processar o arquivo</li>
+                <li>Você será redirecionado para a página de Gráficos para ver as visualizações dos seus dados</li>
+            </ol>
+            <p><strong>Nota:</strong> O arquivo deve ter colunas para Date, Time, Global_active_power, Global_reactive_power, Voltage, Global_intensity, Sub_metering_1, Sub_metering_2 e Sub_metering_3.</p>
         </div>
     </section>
 </div>

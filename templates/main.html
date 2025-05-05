@@ -1,28 +1,99 @@
 {% extends "base.html" %}
 
-{% block title %}Main - Emergy Application{% endblock %}
+{% block title %}Emergia - Energia Renovável{% endblock %}
 
-{% block header %}Main Page{% endblock %}
+{% block header %}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <section class="welcome-section">
-        <h2>Welcome to the Emergy Application</h2>
-        <p>This application provides tools for emergy calculation and visualization.</p>
-    </section>
-    
-    <section class="features-section">
-        <div class="feature-card">
-            <h3>Emergy Calculator</h3>
-            <p>Upload CSV files to calculate emergy values.</p>
-            <a href="{{ url_for('emergy.emergy_calculator') }}" class="btn">Go to Calculator</a>
+<div class="hero-section">
+    <div class="hero-content">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Emergia Logo" class="logo">
         </div>
-        
-        <div class="feature-card">
-            <h3>Graphics</h3>
-            <p>Visualize your emergy data with interactive graphics.</p>
-            <a href="{{ url_for('emergy.graphics') }}" class="btn">View Graphics</a>
+        <h2>Energia Renovável</h2>
+        <p>Preservando nosso ecossistema</p>
+        <a href="{{ url_for('emergy.emergy_calculator') }}" class="btn btn-primary">Faça o cálculo</a>
+    </div>
+</div>
+
+<div class="info-section">
+    <div class="container">
+        <div class="info-text">
+            <p>Somos uma empresa voltada para eficiência, sustentabilidade e geração de energia renovável. A nossa missão é contribuir para um mundo mais sustentável, oferecendo soluções em <strong>cálculos de Emergia</strong>, análise de recursos naturais, otimização de processos e desenvolvimento de tecnologias limpas.</p>
+            <p>Acreditamos que o futuro depende de decisões conscientes tomadas hoje, e que a sustentabilidade não é apenas uma escolha, mas uma necessidade para garantir recursos para as próximas gerações.</p>
+            <p>Nossa equipe é formada por profissionais qualificados e comprometidos com a excelência e a inovação, sempre buscando as melhores soluções para nossos clientes e para o planeta.</p>
+            <p><strong>Junte-se a nós nessa jornada rumo à Emergia!</strong></p>
         </div>
-    </section>
+    </div>
+</div>
+
+<div class="values-section">
+    <div class="container">
+        <div class="values-content">
+            <div class="values-block">
+                <div class="section-header">
+                    <h3>Valores</h3>
+                    <div class="sustainability-image">
+                        <img src="{{ url_for('static', filename='img/Sustainability_1.png') }}" alt="Sustainability 1">
+                    </div>
+                </div>
+                <ol>
+                    <li><strong>Inovação:</strong> Buscamos constantemente novas formas de melhorar a eficiência e sustentabilidade dos processos energéticos.</li>
+                    <li><strong>Educação:</strong> Acreditamos no poder da educação para transformar a sociedade e promover práticas sustentáveis.</li>
+                    <li><strong>Transparência:</strong> Mantemos uma comunicação clara e honesta com todos os nossos stakeholders.</li>
+                    <li><strong>Liderança:</strong> Trabalhamos para liderar, estabelecer e disseminar as melhores práticas em energia renovável.</li>
+                    <li><strong>Responsabilidade Social:</strong> Nosso trabalho é guiado pelo compromisso com o bem-estar da sociedade e do meio ambiente.</li>
+                </ol>
+            </div>
+            
+            <div class="mission-vision">
+                <div class="mission-block">
+                    <div class="section-header">
+                        <h3>Missão</h3>
+                        <div class="sustainability-image">
+                            <img src="{{ url_for('static', filename='img/Sustainability_2.png') }}" alt="Sustainability 2">
+                        </div>
+                    </div>
+                    <div class="mission-content">
+                        <p>Nossa missão é desenvolver e compartilhar tecnologias para criar um <strong>Cálculo de Emergia</strong> preciso e acessível, permitindo que empresas e indivíduos tomem decisões mais sustentáveis. Queremos empoderar as pessoas a entender o impacto ambiental de suas escolhas e contribuir para um mundo mais equilibrado e consciente.</p>
+                    </div>
+                </div>
+                
+                <div class="vision-block">
+                    <div class="section-header">
+                        <h3>Visão</h3>
+                        <div class="sustainability-image">
+                            <img src="{{ url_for('static', filename='img/Sustainability_3.png') }}" alt="Sustainability 3">
+                        </div>
+                    </div>
+                    <p>Ser referência global em soluções baseadas no Cálculo de Emergia, contribuindo para a transição para uma economia circular e sustentável. Queremos um mundo onde todas as decisões sejam tomadas com base em dados concretos que garantam a preservação dos recursos naturais e o equilíbrio entre desenvolvimento econômico e sustentabilidade ambiental.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slogan-section">
+    <div class="container">
+        <h2>Porque a Natureza não é só energia, é Emergia!</h2>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<div class="footer-content">
+    <div class="footer-logo">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Emergia Logo" class="logo-small">
+    </div>
+    <div class="footer-info">
+        <h4>Visite-nos:</h4>
+        <p>Rua das Flores, Santo Amaro</p>
+        <p>São Paulo, SP</p>
+    </div>
+    <div class="footer-contact">
+        <h4>Inquéritos em:</h4>
+        <p>Contato@emergia.com</p>
+    </div>
 </div>
 {% endblock %}

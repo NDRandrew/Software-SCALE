@@ -48,8 +48,12 @@ function initializeFileUploadForm() {
                 const fileContent = e.target.result;
                 
                 try {
-                    // Armazena os dados do arquivo no sessionStorage para uso na página de gráficos
-                    sessionStorage.setItem('energyData', fileContent);
+                    // Processa o arquivo para extrair apenas os dados necessários
+                    // em vez de armazenar o arquivo inteiro
+                    const processedData = processFileData(fileContent);
+                    
+                    // Armazena os dados processados no sessionStorage
+                    sessionStorage.setItem('energyData', JSON.stringify(processedData));
                     sessionStorage.setItem('energyDataFilename', file.name);
                     
                     // Redireciona para a página de gráficos após um pequeno atraso
@@ -59,7 +63,7 @@ function initializeFileUploadForm() {
                     }, 1000);
                 } catch (error) {
                     console.error('Erro ao processar o arquivo:', error);
-                    alert('Ocorreu um erro ao processar o arquivo. Por favor, tente novamente.');
+                    alert('Ocorreu um erro ao processar o arquivo: ' + error.message + '. Por favor, tente novamente com um arquivo menor ou entre em contato com o suporte.');
                     uploadStatus.style.display = 'none';
                 }
             };
@@ -72,4 +76,105 @@ function initializeFileUploadForm() {
             reader.readAsText(file);
         });
     }
+}
+
+/**
+ * Processa os dados do arquivo para reduzir o tamanho e evitar exceder a cota de armazenamento
+ * @param {string} fileContent - O conteúdo do arquivo
+ * @returns {Object} - Os dados processados
+ */
+function processFileData(fileContent) {
+    // Divide o conteúdo em linhas
+    const lines = fileContent.trim().split('\n');
+    
+    // Determina o separador (ponto e vírgula ou espaço)
+    let separator = ';';
+    const firstLine = lines[0];
+    
+    // Verifica se este é um arquivo .txt com os campos esperados
+    const expectedFields = ['Date', 'Time', 'Global_active_power', 'Global_reactive_power', 
+                           'Voltage', 'Global_intensity', 'Sub_metering_1', 
+                           'Sub_metering_2', 'Sub_metering_3'];
+    
+    // Tenta detectar o separador
+    if (firstLine.includes(';')) {
+        separator = ';';
+    } else if (firstLine.includes(',')) {
+        separator = ',';
+    } else if (firstLine.includes('\t')) {
+        separator = '\t';
+    } else {
+        // Se nenhum separador comum for encontrado, assume que é separado por espaço
+        separator = ' ';
+    }
+    
+    // Extrai os cabeçalhos (primeira linha)
+    let headers = firstLine.split(separator);
+    
+    // Se os cabeçalhos não corresponderem aos campos esperados, use os campos esperados
+    // Isso é útil para arquivos .txt que podem não ter cabeçalhos
+    const headerMatch = headers.some(header => 
+        expectedFields.includes(header.trim())
+    );
+    
+    let startIndex = 0;
+    if (!headerMatch) {
+        headers = expectedFields;
+        // Começa a análise a partir da primeira linha se os cabeçalhos não estiverem presentes
+        startIndex = 0;
+    } else {
+        // Começa a análise a partir da segunda linha se os cabeçalhos estiverem presentes
+        startIndex = 1;
+    }
+    
+    // Limita o número de linhas para evitar exceder a cota de armazenamento
+    const MAX_LINES = 5000; // Ajuste este valor conforme necessário
+    const endIndex = Math.min(lines.length, startIndex + MAX_LINES);
+    
+    // Processa as linhas de dados
+    const parsedData = [];
+    for (let i = startIndex; i < endIndex; i++) {
+        // Pula linhas vazias
+        if (!lines[i].trim()) continue;
+        
+        const values = lines[i].split(separator);
+        
+        // Pula linhas que não têm valores suficientes
+        if (values.length < 3) continue; // Precisa pelo menos de data, hora e alguns valores
+        
+        const dataPoint = {};
+        for (let j = 0; j < Math.min(headers.length, values.length); j++) {
+            const header = headers[j].trim();
+            // Converte valores numéricos para números
+            const value = values[j].replace(',', '.').trim();
+            
+            if (header !== 'Date' && header !== 'Time') {
+                dataPoint[header] = parseFloat(value) || 0; // Padrão para 0 se a análise falhar
+            } else {
+                dataPoint[header] = value;
+            }
+        }
+        
+        // Combina Date e Time em um único campo datetime
+        if (dataPoint['Date'] && dataPoint['Time']) {
+            try {
+                dataPoint['DateTime'] = new Date(`${dataPoint['Date']} ${dataPoint['Time']}`);
+            } catch (e) {
+                console.error('Erro ao analisar data:', e);
+                // Usa a data atual como fallback
+                dataPoint['DateTime'] = new Date();
+            }
+        }
+        
+        parsedData.push(dataPoint);
+    }
+    
+    // Retorna um objeto com os dados processados e metadados
+    return {
+        headers: headers,
+        data: parsedData,
+        totalLines: lines.length,
+        processedLines: parsedData.length,
+        isSampled: lines.length > MAX_LINES
+    };
 }

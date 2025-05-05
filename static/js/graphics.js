@@ -35,26 +35,34 @@ document.addEventListener('DOMContentLoaded', function() {
  * Verifica se há dados de energia no sessionStorage e os processa
  */
 function checkForEnergyData() {
-    const energyData = sessionStorage.getItem('energyData');
+    const energyDataStr = sessionStorage.getItem('energyData');
     const filename = sessionStorage.getItem('energyDataFilename');
     
-    if (energyData) {
+    if (energyDataStr) {
         console.log(`Dados de energia encontrados no sessionStorage: ${filename}`);
         
         // Limpa os dados do sessionStorage para evitar processamento duplicado em recargas da página
         sessionStorage.removeItem('energyData');
         sessionStorage.removeItem('energyDataFilename');
         
-        // Processa os dados
-        processEnergyData(energyData);
+        try {
+            // Converte a string JSON de volta para um objeto
+            const energyData = JSON.parse(energyDataStr);
+            
+            // Processa os dados
+            processEnergyData(energyData);
+        } catch (error) {
+            console.error('Erro ao analisar dados do sessionStorage:', error);
+            showError(document.querySelector('.graphics-container'), 'Erro ao analisar dados. Por favor, tente novamente.');
+        }
     }
 }
 
 /**
  * Processa os dados de energia e cria os gráficos
- * @param {string} data - Os dados de energia em formato de texto
+ * @param {Object} processedData - Os dados de energia processados
  */
-function processEnergyData(data) {
+function processEnergyData(processedData) {
     // Mostra indicador de carregamento
     showLoadingIndicator('Processando dados de energia...');
     
@@ -62,25 +70,42 @@ function processEnergyData(data) {
     disableControls();
     
     try {
-        // Para arquivos grandes, use o web worker
-        if (data.length > 1000000) { // ~1MB
-            worker.postMessage({
-                action: 'parse',
-                data: {
-                    fileContent: data
-                }
-            });
-        } else {
-            // Para arquivos menores, processe no thread principal
-            parsedData = parseData(data);
+        // Extrai os dados do objeto processado
+        parsedData = processedData.data;
+        
+        // Adiciona informações sobre amostragem, se aplicável
+        if (processedData.isSampled) {
+            console.log(`Dados amostrados: ${processedData.processedLines} de ${processedData.totalLines} linhas`);
             
-            // Ativa controles após o carregamento dos dados
-            enableControls();
-            hideLoadingIndicator();
+            // Adiciona uma mensagem de aviso sobre amostragem
+            const graphicsContainer = document.querySelector('.graphics-container');
+            const samplingWarning = document.createElement('div');
+            samplingWarning.className = 'sampling-warning';
+            samplingWarning.style.backgroundColor = '#fff3cd';
+            samplingWarning.style.color = '#856404';
+            samplingWarning.style.padding = '10px';
+            samplingWarning.style.borderRadius = '5px';
+            samplingWarning.style.marginBottom = '20px';
+            samplingWarning.style.textAlign = 'center';
+            samplingWarning.innerHTML = `
+                <strong>Nota:</strong> O arquivo é muito grande (${processedData.totalLines.toLocaleString()} linhas). 
+                Mostrando uma amostra de ${processedData.processedLines.toLocaleString()} linhas para melhor desempenho.
+            `;
             
-            // Cria o gráfico inicial (Time Series por padrão)
-            createTimeSeriesChart(document.querySelector('.graphics-container'), sampleData(parsedData, MAX_POINTS_TIME_SERIES));
+            // Insere o aviso no início do container
+            if (graphicsContainer.firstChild) {
+                graphicsContainer.insertBefore(samplingWarning, graphicsContainer.firstChild);
+            } else {
+                graphicsContainer.appendChild(samplingWarning);
+            }
         }
+        
+        // Ativa controles após o carregamento dos dados
+        enableControls();
+        hideLoadingIndicator();
+        
+        // Cria o gráfico inicial (Time Series por padrão)
+        createTimeSeriesChart(document.querySelector('.graphics-container'), parsedData);
     } catch (error) {
         console.error('Erro ao processar dados:', error);
         showError(document.querySelector('.graphics-container'), 'Erro ao processar dados. Verifique se o arquivo está no formato correto.');
@@ -285,12 +310,58 @@ function initializeGraphicsVisualization() {
     const chartTypeSelect = document.getElementById('chart-type');
     const updateChartBtn = document.getElementById('update-chart');
     const dataFileInput = document.getElementById('data-file');
+    const timeRangeControls = document.getElementById('time-range-controls');
     
     // Create loading indicator
     createLoadingIndicator(graphicsContainer);
     
     // Enable controls for file upload
     dataFileInput.disabled = false;
+    
+    // For testing purposes, show the time range controls
+    if (timeRangeControls) {
+        timeRangeControls.style.display = 'block';
+        
+        // Get the time range selectors
+        const startTimeSelect = document.getElementById('start-time');
+        const endTimeSelect = document.getElementById('end-time');
+        const updateTimeRangeBtn = document.getElementById('update-time-range');
+        
+        // Enable the controls
+        if (startTimeSelect) startTimeSelect.disabled = false;
+        if (endTimeSelect) endTimeSelect.disabled = false;
+        if (updateTimeRangeBtn) updateTimeRangeBtn.disabled = false;
+        
+        // Add some sample times for testing
+        const sampleTimes = ['00:00:00', '06:00:00', '12:00:00', '18:00:00', '23:59:59'];
+        
+        if (startTimeSelect && endTimeSelect) {
+            // Clear existing options
+            startTimeSelect.innerHTML = '';
+            endTimeSelect.innerHTML = '';
+            
+            // Add sample times
+            sampleTimes.forEach((time, index) => {
+                const startOption = document.createElement('option');
+                startOption.value = time;
+                startOption.textContent = time;
+                // Select first time by default
+                if (index === 0) {
+                    startOption.selected = true;
+                }
+                startTimeSelect.appendChild(startOption);
+                
+                const endOption = document.createElement('option');
+                endOption.value = time;
+                endOption.textContent = time;
+                // Select last time by default
+                if (index === sampleTimes.length - 1) {
+                    endOption.selected = true;
+                }
+                endTimeSelect.appendChild(endOption);
+            });
+        }
+    }
     
     // Add event listener for file upload
     dataFileInput.addEventListener('change', function(event) {
@@ -861,43 +932,162 @@ function createTimeSeriesChart(container, data) {
     const timeRangeControls = document.getElementById('time-range-controls');
     timeRangeControls.style.display = 'block';
     
-    // Get the time range selectors
-    const startTimeSelect = document.getElementById('start-time');
-    const endTimeSelect = document.getElementById('end-time');
+    // Get the time range elements
+    const timeRangeMin = document.getElementById('time-range-min');
+    const timeRangeMax = document.getElementById('time-range-max');
+    const sliderMinHandle = document.getElementById('slider-min-handle');
+    const sliderMaxHandle = document.getElementById('slider-max-handle');
+    const sliderRange = document.getElementById('slider-range');
+    const timeTicks = document.getElementById('time-ticks');
     const updateTimeRangeBtn = document.getElementById('update-time-range');
     
-    // Enable the controls
-    startTimeSelect.disabled = false;
-    endTimeSelect.disabled = false;
+    // Enable the update button
     updateTimeRangeBtn.disabled = false;
-    
-    // Clear existing options
-    startTimeSelect.innerHTML = '';
-    endTimeSelect.innerHTML = '';
     
     // Get unique times from data
     const uniqueTimes = [...new Set(data.map(item => item.Time))].sort();
     
-    // Populate time selectors
-    uniqueTimes.forEach((time, index) => {
-        const startOption = document.createElement('option');
-        startOption.value = time;
-        startOption.textContent = time;
-        // Select first time by default
-        if (index === 0) {
-            startOption.selected = true;
+    // Store the times for later use
+    window.timeRangeData = {
+        times: uniqueTimes,
+        currentMinIndex: 0,
+        currentMaxIndex: uniqueTimes.length - 1,
+        sliderWidth: document.querySelector('.range-slider-container').offsetWidth - 18, // Subtract handle width
+    };
+    
+    // Set initial values
+    timeRangeMin.textContent = uniqueTimes[0];
+    timeRangeMax.textContent = uniqueTimes[uniqueTimes.length - 1];
+    
+    // Position the handles
+    sliderMinHandle.style.left = '0%';
+    sliderMaxHandle.style.left = '100%';
+    sliderRange.style.left = '0%';
+    sliderRange.style.width = '100%';
+    
+    // Create time ticks
+    timeTicks.innerHTML = '';
+    
+    // Add ticks for better visualization (max 10 ticks)
+    const tickCount = Math.min(10, uniqueTimes.length);
+    const tickStep = Math.max(1, Math.floor(uniqueTimes.length / tickCount));
+    
+    for (let i = 0; i < uniqueTimes.length; i += tickStep) {
+        if (i < uniqueTimes.length) {
+            const tick = document.createElement('div');
+            tick.textContent = uniqueTimes[i];
+            timeTicks.appendChild(tick);
         }
-        startTimeSelect.appendChild(startOption);
+    }
+    
+    // Make sure the last tick is always shown
+    if (uniqueTimes.length > 1 && timeTicks.children.length > 0) {
+        const lastTick = document.createElement('div');
+        lastTick.textContent = uniqueTimes[uniqueTimes.length - 1];
+        timeTicks.appendChild(lastTick);
+    }
+    
+    // Initialize drag functionality for the min handle
+    initDragHandle(sliderMinHandle, (newLeft) => {
+        // Calculate the new index based on position
+        const newIndex = Math.round((newLeft / window.timeRangeData.sliderWidth) * (uniqueTimes.length - 1));
+        const boundedIndex = Math.max(0, Math.min(newIndex, window.timeRangeData.currentMaxIndex - 1));
         
-        const endOption = document.createElement('option');
-        endOption.value = time;
-        endOption.textContent = time;
-        // Select last time by default
-        if (index === uniqueTimes.length - 1) {
-            endOption.selected = true;
-        }
-        endTimeSelect.appendChild(endOption);
+        // Update the current min index
+        window.timeRangeData.currentMinIndex = boundedIndex;
+        
+        // Update the min time display
+        timeRangeMin.textContent = uniqueTimes[boundedIndex];
+        
+        // Update the range display
+        updateRangeDisplay();
     });
+    
+    // Initialize drag functionality for the max handle
+    initDragHandle(sliderMaxHandle, (newLeft) => {
+        // Calculate the new index based on position
+        const newIndex = Math.round((newLeft / window.timeRangeData.sliderWidth) * (uniqueTimes.length - 1));
+        const boundedIndex = Math.max(window.timeRangeData.currentMinIndex + 1, Math.min(newIndex, uniqueTimes.length - 1));
+        
+        // Update the current max index
+        window.timeRangeData.currentMaxIndex = boundedIndex;
+        
+        // Update the max time display
+        timeRangeMax.textContent = uniqueTimes[boundedIndex];
+        
+        // Update the range display
+        updateRangeDisplay();
+    });
+    
+    // Function to update the range display
+    function updateRangeDisplay() {
+        const minPercent = (window.timeRangeData.currentMinIndex / (uniqueTimes.length - 1)) * 100;
+        const maxPercent = (window.timeRangeData.currentMaxIndex / (uniqueTimes.length - 1)) * 100;
+        
+        sliderRange.style.left = minPercent + '%';
+        sliderRange.style.width = (maxPercent - minPercent) + '%';
+    }
+    
+    // Function to initialize drag functionality for a handle
+    function initDragHandle(handle, onDrag) {
+        let isDragging = false;
+        let startX, startLeft;
+        
+        handle.addEventListener('mousedown', startDrag);
+        handle.addEventListener('touchstart', startDrag, { passive: false });
+        
+        function startDrag(e) {
+            e.preventDefault();
+            isDragging = true;
+            
+            // Get the starting position
+            if (e.type === 'touchstart') {
+                startX = e.touches[0].clientX;
+            } else {
+                startX = e.clientX;
+            }
+            
+            startLeft = parseFloat(handle.style.left) / 100 * window.timeRangeData.sliderWidth;
+            
+            // Add event listeners for drag and end
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchend', endDrag);
+        }
+        
+        function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            // Calculate the new position
+            let clientX;
+            if (e.type === 'touchmove') {
+                clientX = e.touches[0].clientX;
+            } else {
+                clientX = e.clientX;
+            }
+            
+            const deltaX = clientX - startX;
+            let newLeft = Math.max(0, Math.min(startLeft + deltaX, window.timeRangeData.sliderWidth));
+            
+            // Update the handle position
+            handle.style.left = (newLeft / window.timeRangeData.sliderWidth * 100) + '%';
+            
+            // Call the callback with the new position
+            onDrag(newLeft);
+        }
+        
+        function endDrag() {
+            isDragging = false;
+            
+            // Remove event listeners
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchend', endDrag);
+        }
+    }
     
     // Create chart containers with better layout - larger for 2M+ data points
     const chartsContainer = document.createElement('div');
@@ -983,14 +1173,8 @@ function createTimeSeriesChart(container, data) {
     
     // Function to update charts with filtered data
     function updateCharts() {
-        const startTime = startTimeSelect.value;
-        const endTime = endTimeSelect.value;
-        
-        // Validate time range
-        if (startTime > endTime) {
-            alert('Start time must be before end time');
-            return;
-        }
+        const startTime = uniqueTimes[window.timeRangeData.currentMinIndex];
+        const endTime = uniqueTimes[window.timeRangeData.currentMaxIndex];
         
         // Filter data by selected time range
         const filteredData = filterDataByTimeRange(startTime, endTime);
