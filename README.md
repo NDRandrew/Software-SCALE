@@ -224,8 +224,7 @@ Os testes Cypress estão organizados da seguinte forma:
 - Expandir a cobertura de testes automatizados
 - Implementar análise preditiva para dados de consumo de energia
 - Adicionar mais tipos de visualizações para análise de dados
-- Permitir que o usuario faça upload de arquivos .csv e .xls
-
+- Adicionar todos os gráficos no pdf
 
 
 ## Melhorias Recentes
@@ -285,6 +284,7 @@ Os testes Cypress estão organizados da seguinte forma:
 
 ### Developers
 - `Base`: [André Carbonieri Silva] (https://github.com/NDRandrew) 
-- `Menu Hamburger`: [Kauã de Souza Pereira] (https://github.com/KauaDeSouzaPereira)
-- `Lógica da Calculadora e dos gráficos`: [André Carbonieri Silva] (https://github.com/NDRandrew)
-- `UI/UX`: [Kauã de Souza Pereira] (https://github.com/KauaDeSouzaPereira) e [Juan Santos de Oliveira] (https://github.com/Jplay-code)
+- `Menu Hamburger`: Kauã De Souza Pereira
+- `Lógica da Calculadora e dos gráficos`: André Carbonieri Silva
+- `UI/UX`: Kauã De Souza Pereira e Juan
+- `Botão Salvar Gráficos no PDF`: Kauã De Souza Pereira

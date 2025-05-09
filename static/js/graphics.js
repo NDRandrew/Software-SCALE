@@ -31,6 +31,64 @@ document.addEventListener('DOMContentLoaded', function() {
     checkForEnergyData();
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('salvarPdf').addEventListener('click', salvarComoPdf);
+});
+
+async function salvarComoPdf() {
+    try {
+        const { jsPDF } = window.jspdf;
+        const chartIds = ['emergy-chart', 'sub-metering-chart'];
+        
+       
+        const canvases = [];
+        let totalHeight = 0;
+        const pageWidth = 180; 
+        
+        for (const id of chartIds) {
+            const element = document.getElementById(id);
+            if (!element) continue;
+            
+            const canvas = await html2canvas(element, {
+                scale: 1.8, 
+                logging: true,
+                backgroundColor: '#FFFFFF'
+            });
+            canvases.push(canvas);
+            
+           
+            const imgHeight = (canvas.height * pageWidth) / canvas.width;
+            totalHeight += imgHeight;
+        }
+        
+        
+        totalHeight += 8 * (canvases.length - 1);
+        
+        
+        const marginBottom = 20;
+        const pdfHeight = totalHeight + 15 + marginBottom; 
+        const pdf = new jsPDF('p', 'mm', [210, pdfHeight]);
+        
+       
+        let yPos = 15; 
+        for (const canvas of canvases) {
+            const imgData = canvas.toDataURL('image/png');
+            const imgHeight = (canvas.height * pageWidth) / canvas.width;
+            
+            pdf.addImage(imgData, 'PNG', 15, yPos, pageWidth, imgHeight);
+            yPos += imgHeight + 8; 
+        }
+        
+        pdf.save('graficos_emergia.pdf');
+        
+    } catch (error) {
+        console.error("Erro ao gerar PDF:", error);
+        alert("Erro ao exportar gráficos. Verifique o console.");
+    }
+}
+
+
+
 /**
  * Verifica se há dados de energia no sessionStorage e os processa
  */
@@ -1995,17 +2053,4 @@ function addDataSummaryPanel(container, fullData, sampledData) {
     
     // Add the summary panel to the container
     container.appendChild(summaryPanel);
-}
-
-/**
- * Shows an error message in the container
- * @param {HTMLElement} container - The container to show the error in
- * @param {string} message - The error message to display
- */
-function showError(container, message) {
-    container.innerHTML = `
-        <div class="chart-placeholder">
-            <p class="error-message" style="color: red;">${message}</p>
-        </div>
-    `;
 }

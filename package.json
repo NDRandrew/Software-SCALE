@@ -23,5 +23,8 @@
     "cypress": "^13.6.0",
     "cypress-file-upload": "^5.0.8",
     "start-server-and-test": "^2.0.0"
+  },
+  "dependencies": {
+    "emergy-application": "file:"
   }
 }

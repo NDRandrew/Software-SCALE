@@ -91,6 +91,12 @@
             </div>
         </div>
     </section>
+
+    <section>
+        <div style="margin-top: 15px;display: flex; justify-content: center;">
+            <button id="salvarPdf" class="btn btn-primary">Salvar como PDF</button>
+        </div>
+    </section>
     
     <!-- Nova seção para o resumo de dados -->
     <section class="data-summary-section" style="margin-top: 30px; display: none;">
@@ -156,4 +162,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.1"></script>
 <script src="{{ url_for('static', filename='js/graphics.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 {% endblock %}
